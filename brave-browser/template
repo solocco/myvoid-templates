@@ -1,0 +1,26 @@
+# Template file for 'brave-browser'
+# Repackages the official rpm package.
+pkgname=brave-browser
+version=1.79.118
+revision=1
+archs="x86_64"
+create_wrksrc=yes
+hostmakedepends="rpmextract"
+short_desc="Browser that rethinks the web"
+maintainer="mobinmob <mobinmob@disroot.org>"
+license="MPL-2.0"
+homepage="https://www.brave.com/"
+changelog="https://brave.com/latest/"
+distfiles="https://github.com/brave/brave-browser/releases/download/v${version}/brave-browser-${version}-1.x86_64.rpm"
+checksum=57276377b94ae51701ca8c87df48d8e8a93b7b5d93c3652e2db5d0561a0fd34e
+
+do_install() {
+	# Remove cron job
+	rm -f etc/cron.daily/brave-browser
+	# Copy files
+	vcopy "*" /
+	# Install the icon
+	vmkdir usr/share/pixmaps
+	vinstall opt/brave.com/brave/product_logo_128.png 644 usr/share/pixmaps brave-browser.png
+
+}
